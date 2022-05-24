@@ -37,7 +37,14 @@ class SimpleLayer:
     def init_weights(self,numberInputs, numberNeurons):
         return np.ones((numberNeurons,numberInputs))
 
-
+class MultiClassCELoss:
+    def __init__(self):
+        pass
+    def forward(self, y, y_pred):
+        #-p(input) * log(p(predicted))
+        return -np.sum(np.multiply(y, np.log(y_pred)))
+    def backward():
+        pass
 
 
 

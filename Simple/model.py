@@ -9,7 +9,7 @@ class Model:
 		layer2 = Sigmoid()
 		layer3 = SimpleLayer(numberInputs=20,numberNeurons=5)
 		layer4 = Sigmoid()
-		layer5 = SimpleLayer(numberInputs=5,numberNeurons=20)
+		layer5 = SimpleLayer(numberInputs=5,numberNeurons=10)
 		layer6	= Sigmoid()
 
 		self.layers.append(layer1)
@@ -24,25 +24,32 @@ class Model:
 	def forward(self,input):
 		"""input is the input vector of the picture we are getting"""
 		"""so if the picture is 512x512 the vector is of size 262 144"""
+		"""We do an forward pass through all layers. Between each layer is an activation function"""
 		for layer in self.layers:
 			input = layer.forward(input)
-			#print(input)
 		return input
 	def forward_oneStep(self,input):
 		input = self.layers[0].forward(input)
 		return input
 
 
-	def backward(self, input):
-		pass
-
+	def backward(self, dout):
+		for layer in reversed(self.layers):
+			dout = layer.backward(dout)
+		return dout
 
 
 
 if __name__=="__main__":
 	model = Model()
+	loss = MultiClassCELoss()
 	#Somehow normalize the input
 	sampleinput = np.arange(30)#262144)
-	print(model.forward(sampleinput))
+	sample_gt = np.zeros(10) # number of classes obviously
+	sample_gt[3] = 1
+	out = model.forward(sampleinput)
+	loss_it = loss.forward(sample_gt, out)
+	print(loss_it)
+	#toOneHot switchen
 	#compute_error
 	#model.backward(error)
