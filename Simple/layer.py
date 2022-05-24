@@ -27,15 +27,16 @@ import numpy as np
 class SimpleLayer:
     def __init__(self, numberInputs, numberNeurons):
         self.weights = self.init_weights(numberInputs,numberNeurons) # 30x 20
+
     def forward(self,x):
         output = np.dot(self.weights,x)  #(outputxinput) * (input,0) = (output,0)
         return output
 
-    def backwards(self, x):
+    def backward(self, dout):
         pass
 
     def init_weights(self,numberInputs, numberNeurons):
-        return np.ones((numberNeurons,numberInputs))
+        return np.ones((numberNeurons,numberInputs)) # np.random.random((numberNeurons, numberInputs))
 
 class MultiClassCELoss:
     def __init__(self):
@@ -43,11 +44,20 @@ class MultiClassCELoss:
     def forward(self, y, y_pred):
         #-p(input) * log(p(predicted))
         return -np.sum(np.multiply(y, np.log(y_pred)))
-    def backward():
+    def backward(self, dout):
         pass
 
 
+class Softmax():
+    def __init__(self):
+        pass
+    def forward(self,x):
+        e = np.exp(x)
+        x = e/np.sum(e)
+        return x
 
+    def backward(self,dout):
+        pass
 
 class Sigmoid:
     def __init__(self):
@@ -57,5 +67,5 @@ class Sigmoid:
         outputs = 1 / (1 + np.exp(-x))
         return outputs
 
-    def backward(self):
+    def backward(self, dout):
         pass

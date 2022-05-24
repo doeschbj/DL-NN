@@ -10,7 +10,7 @@ class Model:
 		layer3 = SimpleLayer(numberInputs=20,numberNeurons=5)
 		layer4 = Sigmoid()
 		layer5 = SimpleLayer(numberInputs=5,numberNeurons=10)
-		layer6	= Sigmoid()
+		layer6	= Softmax()
 
 		self.layers.append(layer1)
 		self.layers.append(layer2)
@@ -41,6 +41,7 @@ class Model:
 
 
 if __name__=="__main__":
+	loss_arr = []
 	model = Model()
 	loss = MultiClassCELoss()
 	#Somehow normalize the input
@@ -49,7 +50,7 @@ if __name__=="__main__":
 	sample_gt[3] = 1
 	out = model.forward(sampleinput)
 	loss_it = loss.forward(sample_gt, out)
-	print(loss_it)
-	#toOneHot switchen
-	#compute_error
-	#model.backward(error)
+	loss_arr.append(loss_it)
+	print(out)
+	loss_error = loss.backward(loss_it)
+	x = model.backward(loss_error)
