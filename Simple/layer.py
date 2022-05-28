@@ -68,4 +68,5 @@ class Sigmoid:
         return outputs
 
     def backward(self, dout):
-        pass
+        sigmoid = 1 / (1 + np.exp(-dout))
+        return sigmoid * (1 - sigmoid)
