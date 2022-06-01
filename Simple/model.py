@@ -20,6 +20,9 @@ class Model:
 		self.layers.append(layer6)
 		print("Init")
 
+	def predict(self, input):
+		"""Predicts the class of the input -> after learned"""
+		pass
 
 	def forward(self,input):
 		"""input is the input vector of the picture we are getting"""
@@ -28,6 +31,7 @@ class Model:
 		for layer in self.layers:
 			input = layer.forward(input)
 		return input
+
 	def forward_oneStep(self,input):
 		input = self.layers[0].forward(input)
 		return input
@@ -51,6 +55,7 @@ if __name__=="__main__":
 	out = model.forward(sampleinput)
 	loss_it = loss.forward(sample_gt, out)
 	loss_arr.append(loss_it)
-	print(out)
-	loss_error = loss.backward(loss_it)
+	print(loss_it)
+
+	loss_error = loss.backward(out, sample_gt)
 	x = model.backward(loss_error)
