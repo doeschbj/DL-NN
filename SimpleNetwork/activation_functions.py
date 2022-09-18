@@ -52,6 +52,16 @@ class Tanh:
         dout = 1- tan**2
         return dout
 
+class EmptyActFunc:
+    def __init__(self):
+        pass
+
+    def forward(self, x):
+        return x
+
+    def backward(self, dout):
+        return dout
+
 class Softmax:
     def __init__(self):
         pass

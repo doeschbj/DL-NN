@@ -18,7 +18,8 @@ class FullyConnectedLayer:
             self.act_function = LeakyReLU()
         elif act_function == "Softmax":
             self.act_function = Softmax()
-
+        elif act_function == "None":
+            self.act_function = EmptyActFunc()
         else:
             #default is Sigmoid
             print("Error no activation function type specified: Set default to Sigmoid.")
